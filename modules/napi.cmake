@@ -6,6 +6,7 @@ set(napi_iojs_mirror "https://iojs.org/dist" CACHE STRING "iojs download mirror"
 set(napi_electron_mirror "https://atom.io/download/atom-shell" CACHE STRING "electron download mirror")
 
 execute_process(COMMAND node "--version" OUTPUT_VARIABLE node_runtime_version)
+string(REPLACE "\n" "" node_runtime_version ${node_runtime_version})
 set(napi_runtime_version "${node_runtime_version}" CACHE STRING "node runtime version")
 message(STATUS "node runtime version: ${node_runtime_version}")
 
