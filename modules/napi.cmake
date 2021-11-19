@@ -8,10 +8,6 @@ set(napi_electron_mirror "https://atom.io/download/atom-shell" CACHE STRING "ele
 execute_process(COMMAND node "--version" OUTPUT_VARIABLE node_runtime_version)
 set(napi_runtime_version "${node_runtime_version}" CACHE STRING "node runtime version")
 message(STATUS "node runtime version: ${node_runtime_version}")
-#file(READ package.json package_json)
-#string(JSON package_json_binary GET ${package_json} "binary")
-#string(JSON package_json_binary GET ${package_json} "napi_versions")
-
 
 FetchContent_Declare(node_headers
     URL "${napi_node_mirror}/${napi_runtime_version}/node-${napi_runtime_version}-headers.tar.gz"
