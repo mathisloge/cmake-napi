@@ -20,23 +20,14 @@ message(STATUS "headers: ${node_headers_inc_dir}")
 get_napi_max_version("${node_headers_inc_dir}/node_version.h")
 set(NAPI_VERSION ${napi_max_version} CACHE STRING "used napi version")
 
+message(STATUS "using napi version: ${NAPI_VERSION}")
 if(WIN32)
     set(node_lib_url "${napi_node_mirror}/${napi_runtime_version}")
     set(node_lib_name "node.lib")
     # does anyone need 32bit currently? If yes - add a PR :D
     set(node_lib_url "${node_lib_url}/win-x64/${node_lib_name}")
-    set(node_lib_loc "${CMAKE_CURRENT_BINARY_DIR}/${node_lib_name}")
-    file(DOWNLOAD "${node_lib_url}" "${node_lib_loc}" SHOW_PROGRESS)
-    add_library(napi STATIC IMPORTED GLOBAL)
-    set_target_properties(napi PROPERTIES
-        IMPORTED_LOCATION "${node_lib_loc}"
-        INTERFACE_INCLUDE_DIRECTORIES "${node_headers_inc_dir}"
-    )
-else()
-    add_library(napi INTERFACE IMPORTED GLOBAL)
-    set_target_properties(napi PROPERTIES
-        INTERFACE_INCLUDE_DIRECTORIES "${node_headers_inc_dir}"
-    )
+    set(node_lib_file "${CMAKE_CURRENT_BINARY_DIR}/${node_lib_name}")
+    file(DOWNLOAD "${node_lib_url}" "${node_lib_file}" SHOW_PROGRESS)
 endif()
-target_compile_definitions(napi INTERFACE NAPI_VERSION=${NAPI_VERSION})
-add_library(node::napi ALIAS napi)
+
+include(napi-target)
