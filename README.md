@@ -60,7 +60,7 @@ Your `binding.gyp`:
                 'message': 'Building <target>...',
                 'inputs': [],
                 'outputs': ["<(module_path)/<node-module>"],
-                'action': ['cmake','--build', 'build-cmake', '--config Release'],
+                'action': ['cmake','--build', 'build', '--config Release'],
             },
         ]
         }
