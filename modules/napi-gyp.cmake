@@ -1,13 +1,17 @@
 if(WIN32)
     set(node_headers_inc_dir "${node_root_dir}/include/node")
 else()
-    set(node_headers_inc_dir 
-        "${node_root_dir}/deps/v8/include"
-        "${node_root_dir}/deps/v8/include"
-        "${node_root_dir}/deps/uv/include"
-    )
-    if(EXISTS "${node_root_dir}/src")
-        set(node_headers_inc_dir ${node_headers_inc_dir} "${node_root_dir}/src")
+    if(NOT EXISTS "${node_root_dir}/src")
+        set(node_headers_inc_dir 
+            "${node_root_dir}/deps/v8/include"
+            "${node_root_dir}/deps/v8/include"
+            "${node_root_dir}/deps/uv/include",
+            "${node_root_dir}/src"
+        )
+    else()
+        set(node_headers_inc_dir 
+            "${node_root_dir}/include/node"
+        )
     endif()
 endif()
 message(STATUS "headers: ${node_headers_inc_dir}")
