@@ -1,5 +1,5 @@
 message(STATUS "using napi version ${NAPI_VERSION}")
-if(WIN32)
+if(EXISTS "${node_lib_file}")
     add_library(napi STATIC IMPORTED GLOBAL)
     set_target_properties(napi PROPERTIES
         IMPORTED_LOCATION "${node_lib_file}"
